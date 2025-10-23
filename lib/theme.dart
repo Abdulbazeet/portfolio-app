@@ -4,15 +4,15 @@ import 'package:sizer/sizer.dart';
 
 class AppTheme {
   AppTheme._();
+
   static ThemeData lightmode = ThemeData(
+    brightness: Brightness.light,
     colorScheme: ColorScheme.light(
-      brightness: Brightness.light,
-      primary: Color(0xFFEB2F3D),
-      surface: Colors.grey[400]!,
+      primary: const Color(0xFFEB2F3D),
+      surface: Colors.grey[300]!,
       onSurface: Colors.black,
       secondary: Colors.white,
     ),
-    brightness: Brightness.light,
     textTheme: TextTheme(
       bodyLarge: GoogleFonts.poppins(
         color: Colors.black,
@@ -32,7 +32,7 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xFFEB2F3D),
+        backgroundColor: const Color(0xFFEB2F3D),
         foregroundColor: Colors.white,
         textStyle: GoogleFonts.poppins(
           fontSize: 14.sp,
@@ -42,20 +42,18 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(3.sw),
         ),
-        // padding: EdgeInsets.symmetric(vertical: 3.sh, horizontal: 4.sw),
       ),
     ),
   );
 
   static ThemeData darkMode = ThemeData(
     brightness: Brightness.dark,
-    colorScheme: ColorScheme.dark(
+    colorScheme: const ColorScheme.dark(
       primary: Color(0xFFEB2F3D),
       surface: Colors.black54,
       onSurface: Colors.white,
       secondary: Colors.black,
     ),
-
     textTheme: TextTheme(
       bodyLarge: GoogleFonts.poppins(
         color: Colors.white,

@@ -21,19 +21,15 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 1200),
     );
-
     Future.delayed(const Duration(milliseconds: 300), () {
       controller.forward();
     });
-
     _loadTheme();
   }
 
   Future<void> _loadTheme() async {
     final theme = await ThemeDb.getTheme();
-    setState(() {
-      isDarkMode = theme;
-    });
+    setState(() => isDarkMode = theme ?? false);
   }
 
   Future<void> _toggleTheme() async {
@@ -53,12 +49,12 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final slideAvatar = Tween<Offset>(
-      begin: const Offset(-1, 0), // from left
+      begin: const Offset(-1, 0),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: controller, curve: Curves.easeOutBack));
 
     final slideText = Tween<Offset>(
-      begin: const Offset(1, 0), // from right
+      begin: const Offset(1, 0),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: controller, curve: Curves.easeOutBack));
 
@@ -68,46 +64,54 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       body: SafeArea(
         child: Stack(
           children: [
+            Positioned.fill(child: Lottie.asset('assets/Background.json')),
             Positioned(
               right: 3.sw,
-              top: 0,
+              top: 3.sh,
               child: InkWell(
                 onTap: _toggleTheme,
-                child: (isDarkMode ?? false)
-                    ? const Icon(Icons.sunny)
-                    : const Icon(Icons.mode_night),
+                child: Icon(
+                  (isDarkMode ?? false)
+                      ? Icons.wb_sunny_rounded
+                      : Icons.nightlight_round,
+                  size: 24.sp,
+                ),
               ),
             ),
-            // Positioned.fill(child: Lottie.asset('assets/Background.json')),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 3.sw, vertical: 4.sh),
+              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
               child: Center(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SlideTransition(
                       position: slideAvatar,
                       child: FadeTransition(
                         opacity: fade,
-                        child: CircleAvatar(radius: 40.sp),
+                        child: CircleAvatar(
+                          radius: 40.sp,
+                          backgroundImage: const AssetImage(
+                            'assets/_DSC0015.jpg',
+                          ),
+                        ),
                       ),
                     ),
+                    SizedBox(height: 3.h),
                     SlideTransition(
                       position: slideText,
                       child: FadeTransition(
                         opacity: fade,
                         child: Column(
                           children: [
-                            SizedBox(height: 3.sh),
                             Text(
                               'Abdulbazeet Olatunji Balogun',
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
-                            SizedBox(height: 3.sh),
+                            SizedBox(height: 2.h),
                             Text(
-                              "Hi there, I’m Abdulbazeet Olatunji, a passionate Flutter developer who enjoys turning ideas into interactive, meaningful digital experiences. I love creating things that not only look great but also feel intuitive to use. When I’m not coding, I’m exploring design concepts, learning new technologies, or thinking about how to make user experiences smoother and smarter. My goal is simple — build products that people enjoy using.",
+                              "Hi there, I’m Abdulbazeet Olatunji, a passionate Flutter developer who enjoys turning ideas into interactive, meaningful digital experiences.",
                               style: Theme.of(context).textTheme.bodyMedium,
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),
